@@ -23,9 +23,10 @@ Route::get('/welcome', function () {
 });
 /* //Pruebas de ruta
 Route::get('/testOrm', 'pruebasController@testOrm');
-Route::get('usuario/pruebas', 'userController@pruebas');
 Route::get('post/pruebas', 'postController@pruebas');
 Route::get('categoria/pruebas', 'categoryController@pruebas'); */
+Route::get('api/pruebas', 'userController@pruebas');
+Route::post('api/receive', 'userController@receive');
 
 // Rutas de usuario
 Route::post('api/register', "userController@register");

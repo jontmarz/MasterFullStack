@@ -9,9 +9,9 @@ class JwtAuth {
 
     public $key;
 
-    public function _constructor()
+    public function __construct()
     {
-        $this->key = "Esta es una clave secreta que solo yo la conozco-79514676";
+        $this->key = "Esta_es_una_clave_secreta_que_solo_yo_la_conozco-79514676";
     }
 
     public function signup($email, $password, $getToken = null)

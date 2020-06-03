@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
+use \App\Http\Middleware\ApiAuthMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,9 @@ Route::post('api/receive', 'userController@receive');
 // Rutas de usuario
 Route::post('api/register', "userController@register");
 Route::post('api/login', "userController@login");
-Route::put('api/update', "userController@update");
+Route::put('api/user/update', "userController@update");
 Route::delete('api/destroy', "userController@destroy");
+Route::post('/api/user/upload', "userController@upload")->middleware(ApiAuthMiddleware::class);
+Route::get('/api/user/avatar/{filename}', 'userController@getImage');
+Route::get('/api/user/detail/{id}', 'userController@detailsProfile');
 

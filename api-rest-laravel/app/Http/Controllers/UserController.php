@@ -109,11 +109,108 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-        return "Acción de Actualizar Usuario ";
+        // Comprobar el usuario identificado
+        $token = $request->header('authorization');
+        $jwtAuth = new \JwtAuth;
+        $checkToken = $jwtAuth->checkToken($token);
+
+        // Si enl usuario es identificado
+        if ($checkToken && !empty($this->params_array)) {
+            $user = $jwtAuth->checkToken($token, true); //Tomar datos del usuario
+
+            // Validar datos
+            $validate = \Validator::make($this->params_array, [
+                'name'      => 'required|alpha',
+                'surname'   => 'required|alpha',
+                'email'     => 'required|email|unique:users'.$user->sub
+            ]);
+            // Omitir campo que no se actualizarán
+            unset($this->params_array['id']);
+            unset($this->params_array['role']);
+            unset($this->params_array['password']);
+            unset($this->params_array['create_at']);
+            unset($this->params_array['remember_token']);
+
+            $userUpdate = User::where('id', $user->sub)->update($this->params_array);
+
+            // Resultado
+            $data = array(
+                'status'    => 'success',
+                'code'      => 200,
+                'user'      => $user,
+                'change'    => $this->params_array
+            );
+        } else {
+            $data = array(
+                'status'    => 'error',
+                'code'      => 400,
+                'message'   => 'Usuario no identificado'
+            );
+        }
+
+        return response()->json($data, $data['code']);
     }
 
     public function destroy(Request $request)
     {
         return "Acción de eliminar Usuario";
+    }
+
+    public function upload(Request $request)
+    {
+        // Recoger datos de la petición
+        $image = $request->file('file0');
+
+        // Validar imagen
+        $validate = \Validator::make($request->all(), [
+            'file0' => 'required|image|mimes:tiff,png,gif,jpg,jepg|max:2048'
+        ]);
+
+        // Si no se valida la imagen
+        if (!$image || $validate->fails()) {
+            $data = array(
+                'status'    => 'error',
+                'code'      => 404,
+                'message'   => 'Error al subir la imagen'
+            );
+        } else {
+            $imageName = time().$image->getClientOriginalName();
+            \Storage::disk('users')->put($imageName, \File::get($image));
+
+            $data = array(
+                'status'    => 'success',
+                'code'      => 200,
+                'image'     => $imageName
+            );
+        }
+
+        return response()->json($data, $data['code']);
+    }
+
+    public function getImage($filename)
+    {
+        $file = \Storage::disk('users')->get($filename);
+        return new Response($file, 200);
+    }
+
+    public function detailsProfile($id)
+    {
+        $user = User::find($id);
+
+        if (is_object($user)) {
+            $data = array(
+                'status'    => 'success',
+                'code'      => 200,
+                'user'      => $user
+            );
+        } else {
+            $data = array(
+                'status'    => 'error',
+                'code'      => 404,
+                'message'   => 'El usuario no existe'
+            );
+        }
+
+        return response()->json($data, $data['code']);
     }
 }

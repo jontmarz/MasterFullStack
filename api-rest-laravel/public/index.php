@@ -1,5 +1,14 @@
 <?php
 
+header('Access-Control-Allow-Origin: *'); // Colocar en el *, el dominio frontend, si se quiere restringir el acceso a un solo dominio.
+header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
+header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+header("Allow: GET, POST, OPTIONS, PUT, DELETE");
+$method = $_SERVER['REQUEST_METHOD'];
+if($method == "OPTIONS") {
+    die();
+}
+
 /**
  * Laravel - A PHP Framework For Web Artisans
  *

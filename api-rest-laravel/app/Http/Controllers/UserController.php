@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\JwtAuth;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\User;
@@ -149,11 +150,6 @@ class UserController extends Controller
         }
 
         return response()->json($data, $data['code']);
-    }
-
-    public function destroy(Request $request)
-    {
-        return "Acción de eliminar Usuario";
     }
 
     public function upload(Request $request)

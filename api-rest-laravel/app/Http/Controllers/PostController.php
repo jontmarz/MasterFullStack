@@ -18,8 +18,8 @@ class PostController extends Controller
         $this->middleware('api_auth', ['except'=>['index',
                                                   'show',
                                                   'getImage',
-                                                  'getPostByCategory',
-                                                  'getPostByUser'
+                                                  'getPostbyCategory',
+                                                  'getPostbyUser'
         ]]);
 
         // Recoger datos por post

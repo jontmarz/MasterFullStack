@@ -1,0 +1,70 @@
+<div class="col-md-12 mt-3">
+  <h1 class="text-center">{{page_title}}</h1>
+  <p class="text-center">
+    Edita tus datos personales de usuario
+  </p>
+  <hr>
+  <!-- Mensajes de alerta al usuario
+  *ngIf se utiliza para mostrar una alerta, sobre el 'status' de los datos.
+  Con <a> le muestra al usuario un vínculo con la url para continuar-->
+  <div class="alert alert-success col-md-6 mx-auto mt-3" *ngIf="status === 'success'">
+    Los datos se han actualizado correctamente.
+  </div>
+
+  <div class="alert alert-danger col-md-6 mx-auto mt-3" *ngIf="status === 'error'">
+    Los datos no se han guardado
+  </div>
+
+
+  <!-- Formulario de ajustes -->
+  <!-- Nombre del formulario para Angular y evento que tendrá el formulario -->
+  <form action="" class="col-md-5 mx-auto" #userEditForm="ngForm" (ngSubmit)="onSubmit(userEditForm)">
+    <div class="form-group">
+      <label for="name">Nombre</label>
+      <!-- Evento Angular que tomará los datos cada campo del formulario y el dato que enviará en la DB.
+          Con required exigirá datos en el campo de texto
+          Con Pattern evaluará si los datos colocados por el usuario son los correctos -->
+      <input type="text" name="name" class="form-control" #name="ngModel" [(ngModel)]= "user.name" required pattern="[a-zA-Z]+">
+      <!-- condicional que mostrará mensaje en caso de datos errados -->
+        <small class="invalid-feedback d-block" *ngIf="!name.valid && name.touched">
+          El formato de nombre no es válido
+        </small>
+    </div>
+    <div class="form-group">
+      <label for="surname">Apellido</label>
+      <input type="text" name="surname" class="form-control" #surname="ngModel" [(ngModel)]= "user.surname" required pattern="[a-zA-Z]+">
+        <small class="invalid-feedback d-block" *ngIf="!surname.valid && surname.touched">
+          El formato de apellido no es válido
+        </small>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" name="email" class="form-control" #email="ngModel" [(ngModel)]= "user.email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+      <small class="invalid-feedback d-block" *ngIf="!email.valid && email.touched">
+        El formato de email no es válido
+      </small>
+    </div>
+    <div class="form-group">
+      <label for="description">Bio</label>
+      <textarea [froalaEditor]="froala_options" name="description" class="form-control" #description="ngModel" [(ngModel)]="user.description" id="" cols="30" rows="10"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="image">Avatar</label>
+      <div *ngIf="identity && identity.image">
+        <img src="{{ url + 'user/avatar/' + identity.image }}" alt="" class="img-avatar" />
+      </div>
+      <angular-file-uploader
+        [config]="afuConfig"
+        [resetUpload]=resetVar
+        (ApiResponse)="avatarUpload($event)">
+      </angular-file-uploader>
+      <small class="invalid-feedback d-block" *ngIf="!email.valid && email.touched">
+        El formato de email no es válido
+      </small>
+    </div>
+    <div class="text-center mb-5">
+      <!-- disabled deshabilita el botón si los datos no son correctos -->
+      <input type="submit" valor="Guardar" class="btn btn-outline-success btn-lg" [disabled]="userEditForm.invalid" />
+    </div>
+  </form>
+</div>

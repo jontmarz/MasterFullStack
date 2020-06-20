@@ -16,7 +16,7 @@ class ApiAuthMiddleware
     public function handle($request, Closure $next)
     {
         // Comprobar usuario identificado
-        $token = $request->header('authorization');
+        $token = $request->header('Authorization');
         $jwtAuth = new \JwtAuth;
         $checkToken = $jwtAuth->checkToken($token);
 

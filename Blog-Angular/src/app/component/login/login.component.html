@@ -1,0 +1,28 @@
+<div class="col-md12 mt-4">
+  <h1 class="ba-title">{{page_title}}</h1>
+  <p class="text-center mb-5">Identifícate en la plataforma</p>
+
+  <!-- Formulario de registro -->
+<!-- Nombre del formulario para Angular y evento que tendrá el formulario -->
+  <form action="" class="col-md-4 ml-0 pl-0 mx-auto" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+    <div class="form-group">
+      <!-- Evento Angular que tomará los datos cada campo del formulario y el dato que enviará en la DB.
+        Con required exigirá datos en el campo de texto
+        Con Pattern evaluará si los datos colocados por el usuario son los correctos -->
+      <input type="email" placeholder="Email" name="email" class="form-control" #email="ngModel" [(ngModel)]= "user.email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+      <small class="invalid-feedback d-block" *ngIf="!email.valid && email.touched">
+        El formato de email no es válido
+      </small>
+    </div>
+    <div class="form-group">
+      <input type="password" placeholder="Password" name="password" class="form-control" #password="ngModel" [(ngModel)]="user.password" required >
+      <small class="invalid-feedback d-block" *ngIf="!password.valid && password.touched">
+        La contraseña es debil. Debe introducir una contraseña mayor a 8 digitos con combinación de letras, por lo menos una mayuscula, numeros y símbolos
+      </small>
+    </div>
+    <div class="text-center">
+        <!-- disabled deshabilita el botón si los datos no son correctos -->
+        <input type="submit" valor="Identificarse" class="btn btn-outline-success btn-lg" [disabled]="loginForm.invalid" />
+      </div>
+  </form>
+</div>

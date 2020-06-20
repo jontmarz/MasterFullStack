@@ -1,0 +1,77 @@
+<div class="loading" *ngIf="!posts && is_edit">
+  Cargando...
+</div>
+
+<div class="container-fluid mt-3" *ngIf="posts">
+  <h1 class="ba-title" *ngIf="!is_edit" >{{page_title}}</h1>
+  <div class="container-fluid mt-3" *ngIf="is_edit">
+    <div class="user-card ml-4">
+      <div class="avatar_mask float-left">
+        <img src="{{ url + 'user/avatar/' + identity.image }}" alt="" class="avatar-nav text-center" />
+      </div>
+      <div class="data_mask float-left">
+        <h1 class="title">Perfil de {{ user['name'] + ' ' + user['surname'] }}</h1>
+        <div class="text-left" [innerHtml]="user['description']"></div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </div>
+  <hr>
+  <div class="card-columns">
+    <article class="card w-100" *ngFor="let post of posts">
+      <div class="card-header">
+        <h3 class="text-center">
+          <a [routerLink]="['/entrada', post.id]">{{ post.title }}</a>
+        </h3>
+      </div>
+      <div class="card-body">
+          <!-- Imagen -->
+          <div class="post-image w-100" *ngIf="post.image">
+            <img src="{{ url + 'post/image/' + post.image }}" alt="" class="w-100" />
+          </div>
+          <div class="post-image w-100" *ngIf="!post.image">
+            <img src="assets/img/default.png" alt="" class="w-100" />
+          </div>
+          <!-- Botonos de acción -->
+          <div class="post-buttons text-center mt-1">
+            <a [routerLink]="['/entrada', post.id]" class="btn btn-success mr-3">Leer</a>
+
+            <span *ngIf="identity && identity.sub === post.user_id">
+              <a [routerLink]="['/editar-entrada', post.id]" class="btn btn-warning mr-3">Editar</a>
+
+              <!-- Button to Open the Modal -->
+              <button type="button" class="btn btn-danger" data-toggle="modal" [attr.data-target]="'#myModal'+post.id">
+                Borrar
+              </button>
+
+              <!-- The Modal -->
+              <div class="modal" id="myModal{{post.id}}">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">¿Realmente deseas borrar {{post.title}}?</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                      Esta acción es definitiva. Una vez realizada, no se puede deshacer
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <a (click)="deletePost(post.id)" class="btn btn-danger mr-3" data-dismiss="modal">Borrar</a>
+                      <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+            </span>
+          </div>
+      </div>
+    </article>
+  </div>
+</div>

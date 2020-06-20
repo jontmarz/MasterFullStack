@@ -1,1 +1,104 @@
 /* You can add global styles to this file, and also import other style files */
+// Font
+@import url('https://fonts.googleapis.com/css?family=Kanit:600,600i,700,700i,800,800i,900,900i|Montserrat+Alternates:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap');
+
+// Variables
+$dark-blue: #00000F;
+$golden: #CCA70A;
+$silver: #C0C0C0;
+$purple: #2A002B;
+$light-blue: #00AAFF;
+$orange: #F4CE2C;
+$black: #0C0C0C;
+$gray: #606060;
+// Fin Variables
+
+// General
+h1, h2, h3, h4, h5, h6 { font-family: 'Kanit';}
+a, span, input {font-family: 'Montserrat Alternates';}
+li, label, blockquote {font-family: 'Montserrat';}
+.ba-title {
+  text-transform: uppercase;
+  text-align: center;
+}
+// Fin General
+
+// Barra Navegación
+nav.ba-bg-nav {
+  background-color:  $dark-blue;
+
+  .navbar-nav {
+
+    .nav-link {
+      color: $silver;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .nav-link:hover {
+      color: $light-blue;
+    }
+
+    .nav-link:focus {
+      color: $golden;
+    }
+  }
+}
+.img-avatar {
+  width: 100px;
+  margin: 10px;}
+.avatar-nav {width: 20%;
+}
+.mask-avatar {
+  overflow: hidden;
+  border-radius: 900px;
+  display: flex;
+  justify-content: flex-end;
+}
+.category-nav h3 {font-size: 1.5rem;}
+.card-header h3 a {color: #1b3c23 }
+.card-header h3 a:hover {
+  color: blue;
+  text-decoration: none;
+}
+.post-image {
+  height: 260px;
+  overflow: hidden;
+}
+
+.user-card {
+
+  .perfil-title {
+    font-size: 2.5rem;
+    text-transform: uppercase;
+  }
+  .avatar_mask {
+
+    .avatar-nav {
+      width: 10%;
+    }
+  }
+}
+// footer
+html {
+  min-height: 100%;
+  position: relative;
+
+  body {
+    margin: 0;
+    margin-bottom: 30px;
+  }
+
+  footer {
+    background-color: $dark-blue;
+    color: $silver;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+  }
+}
+// fin Footer

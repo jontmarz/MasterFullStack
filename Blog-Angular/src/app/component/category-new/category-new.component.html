@@ -1,0 +1,32 @@
+<div class="col-md-12 mt-3">
+  <h1 class="text-center">{{page_title}}</h1>
+  <p class="text-center">
+    Crea una nueva categoría para el blog
+  </p>
+  <hr>
+  <!-- Mensajes de alerta al usuario
+  *ngIf se utiliza para mostrar una alerta, sobre el 'status' de los datos.
+  Con <a> le muestra al usuario un vínculo con la url para continuar-->
+  <div class="alert alert-success col-md-6 mx-auto mt-3" *ngIf="status === 'success'">
+    La categoría se ha creado correctamente.
+  </div>
+
+  <div class="alert alert-danger col-md-6 mx-auto mt-3" *ngIf="status === 'error'">
+    No se ha guardado la categoría
+  </div>
+
+
+  <!-- Formulario crear categoria -->
+  <form action="" class="col-md-5 mx-auto" #categoryForm="ngForm" (ngSubmit)="onSubmit(categoryForm)">
+    <div class="from-group">
+      <label for="name">Nombre categoría</label>
+      <input type="text" name="name" class="form-control mb-3" #name="ngModel" [(ngModel)]= "category.name" required />
+    </div>
+    <small *ngIf="!name.valid && name.touched" class="invalid-feedback d-block">
+      El nombre de la categoría no es valido
+    </small>
+    <div class="text-center mb-5">
+      <input type="submit" value="Guardar" class="btn btn-outline-success btn-lg" [disabled]="categoryForm.invalid">
+    </div>
+  </form>
+</div>

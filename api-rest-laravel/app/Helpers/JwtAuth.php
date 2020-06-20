@@ -9,14 +9,13 @@ class JwtAuth {
 
     public $key;
 
-    public function __construct()
-    {
-        $this->key = "Esta_es_una_clave_secreta_que_solo_yo_la_conozco-79514676";
+    public function __construct() {
+        $this->key = 'Esta_es_una_clave_super_secreta-98752448';
     }
 
-    public function signup($email, $password, $getToken = null)
-    {
-        // verificar si existe el usuario
+    public function signup($email, $password, $getToken = null) {
+
+    /* verificar si existe el usuario con sus credenciales */
         $user = User::Where([
             'email'     => $email,
             'password'  => $password,
@@ -24,69 +23,68 @@ class JwtAuth {
 
         $signup = false;
 
-        // comprobar si los datos son correctos
+        /* Comprobar si son correctas */
         if (is_object($user)) {
             $signup = true;
         }
 
-        // Generar el token del usuario autenticado
+    /* Generar los token del usuario identificado */
         if ($signup) {
-            $token = array(
-                'sub'        => $user->id,
-                'email'      => $user->email,
-                'name'       => $user->name,
-                'surname'    => $user->surname,
-                'description'=> $user->description,
-                'image'      => $user->image,
-                'iat'        => time(),
-                'exp'        => time() + (7*24*60*60)
-            );
+            $token = [
+                'sub'           => $user->id,
+                'email'         => $user->email,
+                'name'          => $user->name,
+                'surname'       => $user->surname,
+                'description'   => $user->description,
+                'image'         => $user->image,
+                'iat'       => time(),
+                'exp'       => time() + (7 * 24 * 60 * 60), //cálculo de una semana
+            ];
 
             $jwt = JWT::encode($token, $this->key, 'HS256');
-            $decode = JWT::decode($jwt, $this->key, ['HS256']);
+            $decoded = JWT::decode($jwt, $this->key, ['HS256']);
 
-            // Devolver los datos decofificados y el token
+            /* Devolver los datos decodificados o el token en función del parámetro */
             if (is_null($getToken)) {
                 $data = $jwt;
-            } else {
-                $data = $decode;
+            }else {
+                $data = $decoded;
             }
-        } else {
-            $data = array(
+        }else {
+            $data = [
                 'status'    => 'error',
-                'message'   => 'login Incorrecto'
-            );
+                'message'   => 'Login Incorrecto',
+            ];
         }
 
         return $data;
     }
 
-    public function checkToken($jwt, $getIdentity = false)
-    {
+    public function checkToken($jwt, $getIdentity = false) {
         $auth = false;
 
         try {
             $jwt = str_replace('"', '', $jwt);
-            $decode = JWT::decode($jwt, $this->key, ['HS256']);
-
-        } catch (\UnexpectedValueException $e) {
+            $decoded = JWT::decode($jwt, $this->key, ['HS256']);
+        }catch (\UnexpectedValueException $e) {
             $auth = false;
-
         }catch (\DomainException $e) {
             $auth = false;
+
         }
 
-        if (!empty($decode) && is_object($decode) && isset($decode->sub)) {
+        if (!empty($decoded) && is_object($decoded) && isset($decoded->sub)) {
             $auth = true;
-        } else {
+        }else {
             $auth = false;
         }
 
         if ($getIdentity) {
-            return $decode;
+            return $decoded;
         }
 
         return $auth;
-
     }
+
 }
+

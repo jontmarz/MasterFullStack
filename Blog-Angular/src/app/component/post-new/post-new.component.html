@@ -1,0 +1,49 @@
+<div class="col-md-12 mt-3">
+    <h1 class="text-center">{{page_title}}</h1>
+    <p *ngIf="!is_edit" class="text-center">
+      Crea una nueva entrada
+    </p>
+    <p *ngIf="is_edit && post" class="text-center">
+      Modifica el post {{ post.title}}
+    </p>
+    <hr>
+    <!-- Formulario de ajustes -->
+    <!-- Nombre del formulario para Angular y evento que tendrá el formulario -->
+    <form action="" class="col-md-5 mx-auto" #PostNew="ngForm" (ngSubmit)="onSubmit(PostNew)">
+      <div class="form-group">
+        <label for="title">Título</label>
+        <input type="text" name="title" #title="ngModel" [(ngModel)]="post.title" class="form-control" required />
+        <small *ngIf="!title.valid && title.touched" class="invalid-feedback d-block">
+          El título no es válido
+        </small>
+      </div>
+      <div class="from-group">
+        <label for="content">Contenido</label>
+        <textarea [froalaEditor]="froala_options" name="content" #content="ngModel" [(ngModel)]="post.content" class="form-control" id="" cols="30" rows="10" required></textarea>
+        <small *ngIf="!content.valid && content.touched" class="invalid-feedback d-block">
+          El contenido no es válido
+        </small>
+      </div>
+      <div class="form-group mt-3">
+        <label for="categoy">Categorias</label>
+        <select name="category_id" id="" class="form-control" #category="ngModel" [(ngModel)]="post.category_id">
+          <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+        </select>
+        <div class="form-group mt-3">
+          <label for="image">Imagen</label>
+          <div *ngIf="is_edit && post.image">
+            <img src="{{ url + 'post/image/' + post.image }}" alt="" class="img-avatar" />
+          </div>
+          <angular-file-uploader
+            [config]="afuConfig"
+            [resetUpload]=resetVar
+            (ApiResponse)="imageUpload($event)">
+          </angular-file-uploader>
+        </div>
+        <div class="text-center mb-5">
+          <input type="submit" value="Guardar" class="btn btn-outline-success btn-lg" [disabled]="PostNew.invalid">
+        </div>
+      </div>
+
+    </form>
+  </div>

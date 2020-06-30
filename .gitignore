@@ -54,3 +54,7 @@
 # Archivos no requeridos
 MasterFullStack.code-workspace
 recursosEducativos
+
+# Plantillas
+issues_template.md
+pull_request_template.md

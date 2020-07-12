@@ -1,0 +1,43 @@
+<div class="container-fluid">
+  <h1 class="ba-title mt-4">{{ page_title }}</h1>
+  <hr>
+
+  <div class="alert alert-success col-md-5 mt-3 mx-auto" *ngIf="status === 'success'">
+    Se han cambiado los datos de usuario
+  </div>
+  <div class="alert alert-danger col-md-5 mt-3 mx-auto" *ngIf="status === 'error'">
+    El registro no se ha completado
+  </div>
+
+  <form class="col-md-5 ml-0 pl-0 mx-auto ba-form" #userEditForm="ngForm" (ngSubmit)="onSubmit(userEditForm)">
+    <div class="form-group">
+      <input type="text" class="form-control" name="name" placeholder="Nombre" #name="ngModel" [(ngModel)]="user.name" require pattern="[a-zA-zÀ-ÿ ]+" />
+      <small class="invalid-feedback d-block" *ngIf="name.invalid && name.touched">
+        El formato de nombre no es valido
+      </small>
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" name="surname" placeholder="Apellido" #surname="ngModel" [(ngModel)]="user.surname" require pattern="[a-zA-zÀ-ÿ ]+" />
+      <small class="invalid-feedback d-block" *ngIf="surname.invalid && surname.touched">
+        El formato de apellido no es valido
+      </small>
+    </div>
+    <div class="form-group">
+      <input type="email" class="form-control" name="email" placeholder="Correo electrónico" #email="ngModel" [(ngModel)]="user.email" require pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
+      <small class="invalid-feedback d-block" *ngIf="email.invalid && email.touched">
+        El formato de correo electrónico no es valido
+      </small>
+    </div>
+    <!-- <div class="form-group">
+      <label for="avatar">Avatar</label>
+      <angular-file-uploader
+        [config]="afuConfig"
+        [resetUpload]=resetVar
+        (ApiResponse)="avatarUpload($event)">
+      </angular-file-uploader>
+    </div> -->
+    <div class="text-center">
+      <input type="submit" class="btn btn-success btn-lg mb-4" value="Guardar" [disabled]="userEditForm.invalid" />
+    </div>
+  </form>
+</div>

@@ -31,7 +31,7 @@ router.post('/testeando', UserController.testeando);
 // Rutas de usuario
 router.post('/register', UserController.save);
 router.post('/login', UserController.login);
-router.put('/update', md_auth.auth, UserController.update);
+router.put('/user/update', md_auth.auth, UserController.update);
 router.post('/upload-avatar', [md_auth.auth, md_upload.single('image')],  UserController.uploadAvatar);
 router.get('/avatar/:fileName', UserController.avatar);
 router.get('/users', UserController.getUsers);

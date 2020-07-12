@@ -55,14 +55,33 @@ const controller = {
                                 message: 'Error al guardar el comentario'
                             });
                         }
+                        
+                        Topic.findById(topic._id)
+                             .populate('user')
+                             .populate('comments.user')
+                             .exec((err, topic) => {
+                                // devolver el resultado
+                                if (err) {
+                                    return res.status(500).send({
+                                        status: 'error',
+                                        message: 'error en la petición'
+                                    });
+                                }
 
-                        // Devolver respuesta
-                        return res.status(200).send({
-                            status: 'success',
-                            topic
-                        });
+                                if (!topic) {
+                                    return res.status(404).send({
+                                        status: 'error',
+                                        message: 'No existe el topic'
+                                    });
+                                }
+                                
+                                // Devolver respuesta
+                                return res.status(200).send({
+                                    status: 'success',
+                                    topic
+                                });
+                            });
                     });
-            
                 } else {
                     return res.status(400).send({
                         status: 'error',
@@ -70,8 +89,6 @@ const controller = {
                     });
                 }
             }
-    
-
         });
     },
 
@@ -169,13 +186,32 @@ const controller = {
                         });
                     }
 
-                    // Devolver el resultado
-                    return res.status(200).send({
-                        status: 'success',
-                        topic
-                    });
-                });
+                    Topic.findById(topic._id)
+                         .populate('user')
+                         .populate('comments.user')
+                         .exec((err, topic) => {
+                            // devolver el resultado
+                            if (err) {
+                                return res.status(500).send({
+                                    status: 'error',
+                                    message: 'error en la petición'
+                                });
+                            }
 
+                            if (!topic) {
+                                return res.status(404).send({
+                                    status: 'error',
+                                    message: 'No existe el topic'
+                                });
+                            }
+                            
+                            // Devolver respuesta
+                            return res.status(200).send({
+                                status: 'success',
+                                topic
+                            });
+                        });
+                });
             } else {
                 return res.status(200).send({
                     status: 'error',

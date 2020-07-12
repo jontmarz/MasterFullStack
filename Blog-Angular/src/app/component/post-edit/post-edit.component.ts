@@ -26,10 +26,10 @@ export class PostEditComponent implements OnInit {
     placeholderText: 'Escribe tu biografía aquí',
     charCounterCount: true,
     language: 'es',
-    toolbarButtons: ['bold', 'italic', 'underline', 'paragraphFormat'],
-    toolbarButtonsXS: ['bold', 'italic', 'underline', 'paragraphFormat'],
-    toolbarButtonsSM: ['bold', 'italic', 'underline', 'paragraphFormat'],
-    toolbarButtonsMD: ['bold', 'italic', 'underline', 'paragraphFormat'],
+    toolbarButtons: ['bold', 'italic', 'underline', 'paragraphFormat', 'alert'],
+    toolbarButtonsXS: ['bold', 'italic', 'underline', 'paragraphFormat', 'alert'],
+    toolbarButtonsSM: ['bold', 'italic', 'underline', 'paragraphFormat', 'alert'],
+    toolbarButtonsMD: ['bold', 'italic', 'underline', 'paragraphFormat', 'alert'],
   };
   public afuConfig = {
     multiple: false,

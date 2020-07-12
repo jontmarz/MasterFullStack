@@ -1,0 +1,158 @@
+/* You can add global styles to this file, and also import other style files */
+// Font
+@import url('https://fonts.googleapis.com/css?family=Kanit:600,600i,700,700i,800,800i,900,900i|Montserrat+Alternates:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap');
+
+// Variables
+$dark-blue: #00000F;
+$golden: #CCA70A;
+$silver: #C0C0C0;
+$purple: #2A002B;
+$light-blue: #00AAFF;
+$orange: #F4CE2C;
+$black: #0C0C0C;
+$gray: #606060;
+// Fin Variables
+
+// General
+h1, h2, h3, h4, h5, h6 { font-family: 'Kanit';}
+a, span, input {font-family: 'Montserrat Alternates';}
+li, label, blockquote {font-family: 'Montserrat';}
+
+.ba-header {background-color: $dark-blue;}
+.ba-title {
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.ba-body {
+  margin-bottom: 11vw;
+}
+
+.btn-temas {
+  color: white !important;
+  background-color: $purple !important;
+  border-color: $purple !important;
+}
+
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.navbar {
+  a {
+    font-family: 'Montserrat Alternates';
+    font-size: 25;
+    font-weight: 600;
+    color: $silver !important;
+
+    &:hover {
+      color: $golden !important;
+    }
+  }
+
+  .dropdown {
+    margin-right: 4vw;
+
+    .dropdown-item {
+      padding-left: 1rem;
+    }
+  }
+
+}
+
+.avatar_mask {
+  width: 40px;
+  height: 40px;
+  border-radius: 900px;
+  overflow: hidden;
+
+  img.avatar_nav {
+    height: 40px;
+  }
+}
+
+.avatar_mask_user {
+  width: 60px;
+  height: 60px;
+  border-radius: 900px;
+  overflow: hidden;
+
+  img.avatar_list {
+    width: 100%;
+  }
+}
+
+.ba-pointer {
+  cursor: pointer;
+}
+
+// formularios
+.hide-password {
+  display: flex;
+
+  input {
+    margin-right: 2px;
+  }
+
+  .btn-border {
+    border-radius: 0 5vw 5vw 0;
+  }
+}
+
+form.ba-form {
+  input {
+    &::placeholder {
+      color: $silver !important
+    }
+
+  }
+
+  .ba-rad-input {
+    border-radius: 5vw !important;
+  }
+
+  .ba-rad-pass {
+    border-radius: 5vw 0 0 5vw !important;
+
+  }
+}
+// fin Formularios
+
+// Main
+#ba-main-p {
+
+  .nav-pills {
+    .nav-link.active {
+      background-color: $light-blue !important;
+    }
+  }
+}
+
+// Temas
+.topics {
+  // max-height: 100vw;
+}
+
+// footer
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: $dark-blue;
+  color: $silver;
+  text-align: center;
+
+  h4 {
+    padding: 1vw 0;
+  }
+}
+// fin Footer

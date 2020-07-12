@@ -22,7 +22,7 @@ var controller = {
 
     save: (req, res) => {
         // recoger parametros de la petición
-        params = req.body;
+        var params = req.body;
     
         // validar los datos
         try {
@@ -166,28 +166,26 @@ var controller = {
         // Recoger los datos del usuario
         const params = req.body;
 
-        // Validar datos de usuario
+        // Validar datos
         try {
             var validate_name       = !validator.isEmpty(params.name);
             var validate_surname    = !validator.isEmpty(params.surname);
-            
-        } catch (error) {
+            var validate_email      = !validator.isEmpty(params.email) && validator.isEmail(params.email);
+        } catch (err) {
             return res.status(200).send({
-                message: 'Faltan datos por enviar',
+                message: "Faltan datos por enviar",
                 params
             });
         }
-
+        
         // Eliminar propiedades innecesarias
         delete params.password;
 
-        const userId = req.user.sub;
+        // Comprobar usuario único
+        var userId = req.user.sub;
+        var userEmail = req.user.email;
 
-        console.log(req.user.email);
-
-        // Comprobar si el email es único
-        if (req.user.email != params.email ) {
-
+        if (userEmail != params.email) {
             User.findOne({email: params.email.toLowerCase()}, (err, user) => {
 
                 if (err) {
@@ -195,15 +193,14 @@ var controller = {
                         message: "error al intentar identificarse",
                     });
                 }
-    
-                if (user && user.email == params.email) {
+
+                if(user && user.email === params.email) {
                     return res.status(200).send({
                         message: "No se puede modificar el email",
                     });
                 } else {
-                    // Buscar y actualizar documento
+                    // Buscar y actualizar
                     User.findOneAndUpdate({_id: userId}, params, {new: true}, (err, userUpdated) => {
-    
                         if (err) {
                             return res.status(500).send({
                                 status: 'error',
@@ -212,14 +209,14 @@ var controller = {
                         }
                         
                         if (!userUpdated) {
-                            return res.status(200).send({
+                            return res.status(404).send({
                                 status: 'error',
                                 message: 'No se ha actualizado el usuario'
                             });
                         }
             
                         // Devolver respuesta
-                        return res.status(500).send({
+                        return res.status(200).send({
                             status: 'success',
                             user: userUpdated
                         });
@@ -238,14 +235,14 @@ var controller = {
                 }
                 
                 if (!userUpdated) {
-                    return res.status(200).send({
+                    return res.status(404).send({
                         status: 'error',
                         message: 'No se ha actualizado el usuario'
                     });
                 }
     
                 // Devolver respuesta
-                return res.status(500).send({
+                return res.status(200).send({
                     status: 'success',
                     user: userUpdated
                 });

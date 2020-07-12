@@ -1,0 +1,50 @@
+<div class="container">
+  <h1 class="ba-title">{{ page_title }}</h1>
+  <hr>
+
+  <table class="table table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th>Título</th>
+        <th>Fecha</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let topic of topics">
+      <td>{{ topic.title }}</td>
+      <td>{{ topic.date | amLocale:'es' | amDateFormat:'LL' }}</td>
+      <td>
+        <a [routerLink]="['/panel/editar', topic._id]" class="btn btn-lg btn-warning mr-2"><fa-icon [icon]="editar"></fa-icon></a>
+        <!-- Modal borrar topic -->
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-lg btn-danger" data-toggle="modal" [attr.data-target]="'#modal' + topic._id" >
+          <fa-icon [icon]="borrar"></fa-icon>
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="{{ 'modal' + topic._id }}">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">¿Realmente quieres borrar este tema?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Vas a borrar el tema "<strong>{{ topic.title }}</strong>" para siempre...
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" (click)="deleteTopic(topic._id)" data-dismiss="modal">Borrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- fin modal -->
+      </td>
+    </tbody>
+    <tfoot>
+    </tfoot>
+  </table>
+</div>

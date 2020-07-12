@@ -25,6 +25,7 @@ export class PostNewComponent implements OnInit {
   public froala_options: Object = {
     placeholderText: 'Escribe tu biografía aquí',
     charCounterCount: true,
+	language: 'es',
     toolbarButtons: ['bold', 'italic', 'underline', 'paragraphFormat', 'alert'],
     toolbarButtonsXS: ['bold', 'italic', 'underline', 'paragraphFormat', 'alert'],
     toolbarButtonsSM: ['bold', 'italic', 'underline', 'paragraphFormat', 'alert'],

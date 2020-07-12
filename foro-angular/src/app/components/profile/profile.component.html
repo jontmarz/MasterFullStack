@@ -1,0 +1,25 @@
+<div class="container mt-3 ba-body" *ngIf="user && topics">
+  <!-- Imagen -->
+  <div class="avatar_mask float-left mr-3" *ngIf="user.image">
+    <img src="{{ url + 'avatar/' + user.image }}" alt="" class="avatar_list">
+  </div>
+  <div class="avatar_mask_user float-left mr-3" *ngIf="!user.image">
+    <img src="../../../assets/img/user-profile.jpg" alt="" class="avatar_list">
+  </div>
+  <h1 class="">{{ user.name + ' ' + user.surname }}</h1>
+  <div class="clarfix mt-3">
+
+  <ul class="list-group list-topics mt-4">
+    <li class="list-group-item" *ngFor="let topic of topics">
+      <h4>
+        <a [routerLink]="['/tema', topic._id]" >{{ topic.title }}</a>
+      </h4>
+      <span class="badge badge-light">{{ topic.date | amLocale: 'es' | amTimeAgo }}</span>
+      <a [routerLink]="['/tema', topic._id]" class="btn btn-sm btn-success ml-3"><fa-icon [icon]="leer"></fa-icon></a>
+    </li>
+  </ul>
+
+  <div class="clarfix mt-3">
+  </div>
+
+</div>

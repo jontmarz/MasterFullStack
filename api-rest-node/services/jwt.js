@@ -8,6 +8,7 @@ exports.createToken = (user) => {
         sub:        user._id,
         name:       user.name,
         surname:    user.subname,
+        email:      user.email,
         role:       user.role,
         image:      user.image,
         iat:        moment().unix(),

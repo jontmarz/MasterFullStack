@@ -1,0 +1,54 @@
+<div class="container">
+  <div class="topic-data col-lg-9 float-left">
+    <h1 class="ba-title">{{ topic.title }}</h1>
+    <span class="badge badge-warning mr-2" *ngIf="topic.lang">{{ topic.lang }}</span>
+    <span class="badge badge-primary ml-2">{{ topic.user.name + ' ' + topic.user.surname }}</span>
+    <span class="badge badge-light">{{ topic.date | amLocale: 'es' | amTimeAgo }}</span>
+    <p id="topicContent" class="mt-3">
+      {{ topic.content }}
+    </p>
+    <p id="topicCode" class="mt-2" *ngIf="topic.code && topic.lang">
+      <ngx-highlight-js lang="{‌{topic.lang | lowercase}}" code="{{topic.code}}"></ngx-highlight-js>
+    </p>
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div id="comment-box" class="col-lg-9 mt-2 mb-5">
+    <h3 class="ba-title"> Comentarios</h3>
+    <hr>
+
+    <div class="alert alert-success mt-3 mx-auto" *ngIf="status === 'success'">
+      El comentario se ha creado satisfactoriamente.
+    </div>
+    <div class="alert alert-danger mt-3 mx-auto" *ngIf="status === 'error'">
+      El comentario no se ha podido crear
+    </div>
+
+    <form (ngSubmit)="onSubmit(formCommment)" #formCommment="ngForm" *ngIf="identity">
+      <div class="form-group">
+        <textarea name="content" id="" class="form-control" placeholder="Pon tu comentario:" #content="ngModel" [(ngModel)]="comment.content" require pattern="[a-zA-zÀ-ÿ ]+"></textarea>
+        <small class="invalid-feedback d-block" *ngIf="content.invalid && content.touched">
+          El formato de contenido no es valido
+        </small>
+      </div>
+      <input type="submit" value="Comentar" class="btn btn-success btn-lg mb-4" [disabled]="formCommment.invalid">
+    </form>
+    <hr>
+    <ul class="list-group pb-5">
+      <li class="list-group-item comment-title" *ngFor="let comment of topic.comments">
+        <div class="avatar_mask float-left mr-2">
+          <!-- <img src="{{ url + 'avatar/' + comment.user.image }}" alt="" class="avatar_nav"> -->
+        </div>
+        <span class="badge badge-light mr-2">{{ comment.date | amLocale: 'es' | amTimeAgo }}</span>
+        <span class="badge badge-primary ml-2">{{ comment.user.name + comment.user.surname }}</span>
+        <span class="d-block">
+          {{ comment.content }}
+        </span>
+        <button (click)="deleteComment(comment._id)" class="btn bt sm btn-danger float-right" *ngIf="identity._id === comment.user._id">
+          <fa-icon [icon]="borrar"></fa-icon>
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

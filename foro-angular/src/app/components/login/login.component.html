@@ -1,0 +1,33 @@
+<div class="container-fluid mt-3">
+  <h1 class="ba-title">{{ page_title }}</h1>
+  <p class="text-center">Identifícate en el foro de Jon</p>
+  <hr>
+
+  <div class="alert alert-success col-md-5 mt-3 mx-auto" *ngIf="status === 'success'">
+    Te has identificado correctamente
+  </div>
+  <div class="alert alert-danger col-md-5 mt-3 mx-auto" *ngIf="status == 'error'">
+    Verifica el usuario y contraseña
+  </div>
+
+  <form class="col-md-5 ml-0 pl-0 mx-auto ba-form" #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+    <div class="form-group">
+      <input type="email" class="form-control ba-rad-input" name="email" placeholder="Correo electrónico" #email="ngModel" [(ngModel)]="user.email" require pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
+      <small class="invalid-feedback d-block" *ngIf="email.invalid && email.touched">
+        El formato de correo electrónico no es valido
+      </small>
+    </div>
+    <div class="form-group">
+      <div class="hide-password">
+        <input type="password" viewpassword class="form-control ba-rad-pass" name="password" placeholder="Contraseña" #password="ngModel" [(ngModel)]="user.password" require pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" />
+      </div>
+      <small class="invalid-feedback d-block ba-alert" *ngIf="password.invalid && password.touched">
+        la contraseña debe ser mínimo 8 caracteres incluyendo números, letras y signos
+      </small>
+    </div>
+
+    <div class="text-center mt-4">
+      <input type="submit" class="btn btn-success btn-lg mb-4" value="Iniciar Sesión" [disabled]="loginForm.invalid" />
+    </div>
+  </form>
+</div>

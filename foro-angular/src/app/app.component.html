@@ -1,0 +1,80 @@
+<div class="content-fluid mb-4">
+  <!-- Cabecera de la web -->
+  <nav class="navbar navbar-expand-lg ba-header navbar-dark">
+    <a class="navbar-brand" [routerLink]="['/inicio']">
+      <fa-icon [icon]="foro"></fa-icon> <strong class="pl-2">Foro Jon</strong>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/inicio']">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/temas']" routerLinkActive="router-link-active" >Temas</a>
+        </li>
+        <li class="nav-item" *ngIf="identity">
+          <a class="nav-link" [routerLink]="['/panel/crear']" routerLinkActive="router-link-active" >Crear Temas</a>
+        </li>
+        <li class="nav-item" *ngIf="identity">
+          <a class="nav-link" [routerLink]="['/usuarios']" >Compañeros</a>
+        </li>
+        <li class="nav-item">
+          &nbsp; &nbsp;
+        </li>
+        <li class="nav-item">
+          <form class="form-inline my-2 my-lg-0" #searchForm="ngForm">
+            <input class="form-control mr-sm-2" type="search" placeholder="¿Qúe buscas?" name="busqueda" aria-label="Search" #busqueda="ngModel" [(ngModel)]="search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="goSearch()">Buscar</button>
+          </form>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav navbar-right">
+        <li class="nav-item" *ngIf="!identity">
+          <a class="nav-link" [routerLink]="['/registro']">Registrate</a>
+        </li>
+        <li class="nav-item" *ngIf="!identity">
+          <a class="nav-link" [routerLink]="['/login']">Login</a>
+        </li>
+        <!-- <li class="nav-item" *ngIf="identity">
+          <div class="avatar_mask">
+            <img src="{{ url + 'avatar/' + identity.image }}" alt="" class="avatar_nav">
+          </div>
+        </li> -->
+        <li class="nav-item dropdown" *ngIf="identity">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ identity.name + ' ' + identity.surname }}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" [routerLink]="['/panel/listado']">Panel de Usuario</a>
+            <a class="dropdown-item" [routerLink]="['/perfil', identity._Id]">Mi perfil</a>
+            <a class="dropdown-item" [routerLink]="['/ajustes']">Ajustes</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item ba-pointer" (click)="logOut()">Cerrar Sesión</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+<!-- Body -->
+<div class="col-lg-12-mt3 loading" *ngIf="!load">
+  <img src="/assets/img/loading.gif" alt="">
+</div>
+</div>
+<div *ngIf="load">
+  <router-outlet></router-outlet>
+</div>
+
+<!-- footer -->
+<footer>
+<div class="mt-4 footer">
+  <h4>Jon Tmarz <sup><fa-icon [icon]="copyright"></fa-icon></sup> | Todos los derechos reservados<sup>&copy;</sup></h4>
+</div>
+</footer>
+<!-- fin footer -->
+

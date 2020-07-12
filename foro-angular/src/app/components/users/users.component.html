@@ -1,0 +1,22 @@
+<div class="container mt-3 ba-body">
+  <h1 class="ba-title">{{ page_title }}</h1>
+  <hr>
+
+  <ul class="list-group list-users">
+    <li class="list-group-item" *ngFor="let user of users">
+      <!-- Imagen -->
+      <div class="avatar_mask float-left mr-3" *ngIf="user.image">
+        <img src="{{ url + 'avatar/' + user.image }}" alt="" class="avatar_list">
+      </div>
+      <div class="avatar_mask_user float-left mr-3" *ngIf="!user.image">
+        <img src="../../../assets/img/user-profile.jpg" alt="" class="avatar_list">
+      </div>
+      <h4>
+        <a [routerLink]="['/perfil', user._id]" >{{ user.name + ' ' + user.surname }}</a>
+      </h4>
+      <a [routerLink]="['/perfil', user._id]" class="btn btn-sm btn-success float-left mx-auto d-block">Ver</a>
+    </li>
+  </ul>
+
+  <div class="clarfix mt-3">
+</div>

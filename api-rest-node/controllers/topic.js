@@ -1,6 +1,7 @@
 'use strict'
 
 const validator = require('validator');
+const { populate } = require('../models/topic');
 const Topic = require('../models/topic');
 
 const controller = {
@@ -142,6 +143,7 @@ const controller = {
         // find del topic por el id
         Topic.findById(topicId)
              .populate('user')
+             .populate('comments.user')
              .exec((err, topic) => {
                  // devolver el resultado
                  if (err) {
@@ -163,8 +165,6 @@ const controller = {
                      topic
                  });
              });
-
-
     },
 
     update: (req, res) => {
@@ -215,7 +215,7 @@ const controller = {
                 // Devolver una respuesta
                 return res.status(200).send({
                     status: 'success',
-                    topicUpdated
+                    topic: topicUpdated
                 });
             });
     
@@ -266,6 +266,7 @@ const controller = {
             {'code': {'$regex': searchString, '$options': 'i'} },
             {'lang': {'$regex': searchString, '$options': 'i'} }
         ]})
+        .populate('user')
         .sort([['date', 'descending']])
         .exec((err, topics) => {
             if (err) {

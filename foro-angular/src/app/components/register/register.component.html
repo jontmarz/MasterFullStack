@@ -1,0 +1,38 @@
+<div class="container-fluid mt-3">
+  <h1 class="ba-title">{{ page_title }}</h1>
+  <hr>
+
+
+
+  <form class="col-md-5 ml-0 pl-0 mx-auto ba-form" (ngSubmit)="onSubmit(registerForm)" #registerForm="ngForm">
+    <div class="form-group">
+      <input type="text" class="form-control ba-rad-input" name="name" placeholder="Nombre" #name="ngModel" [(ngModel)]="user.name" required pattern="[a-zA-ZÀ-ÿ ]+">
+      <small class="invalid-feedback d-block" *ngIf="!name.valid && name.touched">
+        El formato de nombre no es válido
+      </small>
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control ba-rad-input" name="surname" placeholder="Apellido" #surname="ngModel" [(ngModel)]="user.surname" required pattern="[a-zA-ZÀ-ÿ ]+">
+      <small class="invalid-feedback d-block" *ngIf="!surname.valid && surname.touched">
+        El format de apellido no es válido
+      </small>
+    </div>
+    <div class="form-group">
+      <input type="email" class="form-control ba-rad-input" name="email" placeholder="Correo electrónico" #email="ngModel" [(ngModel)]="user.email" require pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" />
+      <small class="invalid-feedback d-block" *ngIf="email.invalid && email.touched">
+        El formato de correo electrónico no es valido
+      </small>
+    </div>
+    <div class="form-group">
+      <div class="hide-password">
+        <input type="password" viewpassword class="form-control ba-rad-pass" name="password" placeholder="Contraseña" #password="ngModel" [(ngModel)]="user.password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}">
+      </div>
+      <small class="invalid-feedback d-block" *ngIf="!password.valid && password.touched">
+        La contrasñea debe tener mínimo 8 caracteres combinando letras, símbolos y números
+      </small>
+    </div>
+    <div class="text-center">
+      <input type="submit" class="btn btn-success text-center" value="Regístrate" [disabled]="registerForm.invalid" />
+    </div>
+  </form>
+</div>
